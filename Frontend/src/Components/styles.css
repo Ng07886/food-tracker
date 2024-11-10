@@ -1,0 +1,30 @@
+.calorie-container {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 5px;
+  width: 100vw;
+  max-height: 200px;
+}
+
+.body-container {
+  width: 100vw;
+  display: flex;
+}
+
+.graph-container {
+  text-align: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.food-list-container {
+  text-align: center;
+  justify-content: center;
+  width: 50%;
+}
+
+.scanner-button {
+  width: 100vw;
+  text-align: center;
+}
