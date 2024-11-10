@@ -1,0 +1,53 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  background-color: #393d3f; /* Light background */
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #edf5fc; /* White background for the login box */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px; /* Width of the login box */
+}
+
+.login-box .MuiTypography-root {
+  margin-bottom: 20px; /* Space below the title */
+  font-size: 1.5rem;
+}
+
+.login-box .MuiTextField-root {
+  margin-bottom: 20px; /* Space below each input field */
+  width: 100%; /* Make the inputs take full width */
+}
+
+.button-container {
+  width: 50%;
+  color: white;
+}
+
+.button-container button {
+  background-color: #393d3f;
+  margin: 5px;
+  color: aliceblue;
+}
+
+.login-box .MuiButton-root:hover {
+  background-color: #653e56;
+  border: #653e56 solid 1px;
+}
+
+.MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #653e56 !important; /* Border color when focused */
+  color: #653e56 !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  color: #653e56 !important;
+}
