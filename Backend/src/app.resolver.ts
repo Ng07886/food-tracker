@@ -1,5 +1,6 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
 import { AppService } from './app.service';
+import { Food } from './FoodDTO';
 
 @Resolver()
 export class AppResolver {
@@ -10,8 +11,8 @@ export class AppResolver {
     return this.appService.whatYouAre();
   }
 
-  @Query(() => String)
-  async searchFoods(@Args('query') query: string) {
+  @Query(() => [Food])
+  async searchFoods(@Args('query') query: string): Promise<Food[]> {
     return this.appService.getFoods(query);
   }
 }
