@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 @Injectable()
 export class AppRepository {
@@ -7,7 +10,7 @@ export class AppRepository {
   private readonly API_KEY = process.env.API_KEY;
 
   async searchFoods(query: string, pageSize = 10): Promise<any> {
-    const url = `${this.API_URL}?query=${query}&pageSize=${pageSize}&api_key=${process.env.API_KEY}`;
+    const url = `${this.API_URL}?query=${query}&pageSize=${pageSize}&api_key=${this.API_KEY}`;
     try {
       const response = await axios.get(url);
       const foods = response.data.foods.map((food: any) => ({
