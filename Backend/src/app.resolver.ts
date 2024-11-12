@@ -11,8 +11,8 @@ export class AppResolver {
     return this.appService.whatYouAre();
   }
 
-  @Query(() => [Food])
-  async searchFoods(@Args('query') query: string): Promise<Food[]> {
+  @Query(() => Food)
+  async searchFoods(@Args('query') query: string): Promise<Food> {
     return this.appService.getFoods(query);
   }
 }
