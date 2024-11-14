@@ -19,16 +19,16 @@ export class LabelNutrient {
 @ObjectType()
 export class NutritionData {
   @Field()
-  Protein: LabelNutrient;
+  protein: LabelNutrient;
 
   @Field()
-  Carbs: LabelNutrient;
+  carbs: LabelNutrient;
 
   @Field()
-  Fats: LabelNutrient;
+  fats: LabelNutrient;
 
   @Field()
-  Calories: LabelNutrient;
+  calories: LabelNutrient;
 }
 
 

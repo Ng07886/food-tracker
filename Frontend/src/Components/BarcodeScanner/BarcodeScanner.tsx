@@ -8,21 +8,36 @@ query($query: String!)
   searchFoods(query: $query)
   {
       id
-      description
-      labelNutrients
-    {
-      nutrientId
-      name
-      amount
-      unitName 
+    description
+    nutritionData {
+      protein {
+        amount
+        unitName
+      }
+      carbs {
+        amount
+        unitName
+      }
+      fats {
+        amount
+        unitName
+      }
+      calories {
+        amount
+        unitName
+      }
     }
   }
 }`;
 
+interface ParentProps {
+  setScanBarcode: React.Dispatch<React.SetStateAction<boolean>>;
+  scanBarcode: boolean
+}
 
-function BarcodeScanner() {
+
+function BarcodeScanner({scanBarcode, setScanBarcode}: ParentProps) {
   const [query, setQuery] = useState<string | null>(null);
-  const [bool, setBool] = useState(true)
   const { data, loading, error } = useQuery(ITEM_QUERY, {
     variables: { query },
     skip: !query, // Skip the query if the barcode is null
@@ -30,7 +45,6 @@ function BarcodeScanner() {
 
   const handleScan = (scannedBarcode: string) => {
     console.log(scannedBarcode);
-    setBool(false)
     setQuery(scannedBarcode);
   };
 
@@ -38,11 +52,11 @@ function BarcodeScanner() {
 
   return (
     <>
-      {bool && <BarcodeScannerComponent
+       {scanBarcode && <BarcodeScannerComponent
         width={500}
         height={500}
         onUpdate={(err, result: any) => {
-          if (bool && result) handleScan(result.text);
+          if (result) handleScan(result.text);
         }}
       />}
       {loading && <p>Loading...</p>}
@@ -50,13 +64,10 @@ function BarcodeScanner() {
       {data && data.searchFoods && (
         <div>
           <p>{data.searchFoods.description}</p>
-          {data.searchFoods.labelNutrients.map((nutrient:any)=>
-          (
-            <div>
-              <p>{nutrient.name}</p>
-              <p>{nutrient.amount} {nutrient.unitName}</p>
-            </div>
-          ))}
+          <p>Calories: {data.searchFoods.nutritionData.calories.amount} {data.searchFoods.nutritionData.calories.unitName}</p>
+          <p>Protein: {data.searchFoods.nutritionData.protein.amount} {data.searchFoods.nutritionData.protein.unitName}</p>
+          <p>Carbs: {data.searchFoods.nutritionData.carbs.amount} {data.searchFoods.nutritionData.carbs.unitName}</p>
+          <p>Fats: {data.searchFoods.nutritionData.fats.amount} {data.searchFoods.nutritionData.fats.unitName}</p>
         </div>
         )}
     </>

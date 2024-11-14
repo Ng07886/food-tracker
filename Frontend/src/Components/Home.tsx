@@ -29,7 +29,7 @@ export default function Home() {
         <Button variant="outlined" onClick={() => setScanBarcode(true)}>
           Scan Barcode
         </Button>
-        {scanBarcode && <BarcodeScanner />}
+        {scanBarcode && <BarcodeScanner scanBarcode={scanBarcode} setScanBarcode={setScanBarcode} />}
       </Box>
     </div>
   );

@@ -7,10 +7,10 @@ dotenv.config()
 
 const mappings = {
 
-  1003 : "Protein",
-  1004 : "Fats",
-  1005 : "Carbs",
-  1008 : "Calories"
+  1003 : "protein",
+  1004 : "fats",
+  1005 : "carbs",
+  1008 : "calories"
 }
 
 @Injectable()
