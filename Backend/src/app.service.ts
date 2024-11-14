@@ -9,8 +9,4 @@ export class AppService {
   async getFoods(query: string): Promise<Food> {
     return this.appRepository.searchFoods(query);
   }
-
-  whatYouAre(): string {
-    return 'You Are Gay';
-  }
 }

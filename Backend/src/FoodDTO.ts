@@ -15,6 +15,23 @@ export class LabelNutrient {
   unitName: string;
 }
 
+
+@ObjectType()
+export class NutritionData {
+  @Field()
+  Protein: LabelNutrient;
+
+  @Field()
+  Carbs: LabelNutrient;
+
+  @Field()
+  Fats: LabelNutrient;
+
+  @Field()
+  Calories: LabelNutrient;
+}
+
+
 @ObjectType()
 export class Food {
   @Field()
@@ -40,4 +57,7 @@ export class Food {
 
   @Field(() => [LabelNutrient], { nullable: 'itemsAndList' })
   labelNutrients?: LabelNutrient[];
+
+  @Field()
+  nutritionData?: NutritionData;
 }
