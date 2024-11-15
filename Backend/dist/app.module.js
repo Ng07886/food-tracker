@@ -7,24 +7,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
-const apollo_1 = require("@nestjs/apollo");
-const common_1 = require("@nestjs/common");
-const graphql_1 = require("@nestjs/graphql");
-const app_repository_1 = require("./app.repository");
-const app_resolver_1 = require("./app.resolver");
-const app_service_1 = require("./app.service");
-let AppModule = class AppModule {
-};
+var apollo_1 = require("@nestjs/apollo");
+var common_1 = require("@nestjs/common");
+var graphql_1 = require("@nestjs/graphql");
+var app_repository_1 = require("./FoodScanner/app.repository");
+var app_resolver_1 = require("./FoodScanner/app.resolver");
+var app_service_1 = require("./FoodScanner/app.service");
+var firebase_provider_1 = require("./Firebase/firebase.provider");
+var firestore_service_1 = require("./Firebase/firestore.service");
+var firebase_resolver_1 = require("./Firebase/firebase.resolver");
+var AppModule = (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        (0, common_1.Module)({
+            imports: [
+                graphql_1.GraphQLModule.forRoot({
+                    driver: apollo_1.ApolloDriver,
+                    autoSchemaFile: true,
+                }),
+            ],
+            providers: [
+                app_service_1.AppService,
+                app_resolver_1.AppResolver,
+                app_repository_1.AppRepository,
+                firebase_provider_1.FirebaseProvider,
+                firestore_service_1.FirestoreService,
+                firebase_resolver_1.FirestoreResolver,
+            ],
+            exports: [firestore_service_1.FirestoreService],
+        })
+    ], AppModule);
+    return AppModule;
+}());
 exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [
-            graphql_1.GraphQLModule.forRoot({
-                driver: apollo_1.ApolloDriver,
-                autoSchemaFile: true,
-            }),
-        ],
-        providers: [app_service_1.AppService, app_resolver_1.AppResolver, app_repository_1.AppRepository],
-    })
-], AppModule);
 //# sourceMappingURL=app.module.js.map

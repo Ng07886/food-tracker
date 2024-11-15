@@ -1,4 +1,16 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,24 +48,34 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@nestjs/core");
-var app_module_1 = require("./app.module");
-function bootstrap() {
-    return __awaiter(this, void 0, void 0, function () {
-        var app;
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4, core_1.NestFactory.create(app_module_1.AppModule)];
-                case 1:
-                    app = _b.sent();
-                    return [4, app.listen((_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000)];
-                case 2:
-                    _b.sent();
-                    return [2];
-            }
+exports.FirestoreResolver = void 0;
+var graphql_1 = require("@nestjs/graphql");
+var firestore_service_1 = require("./firestore.service");
+var firebase_types_1 = require("./Types/firebase.types");
+var firebase_dto_1 = require("./Types/firebase.dto");
+var FirestoreResolver = (function () {
+    function FirestoreResolver(firestoreService) {
+        this.firestoreService = firestoreService;
+    }
+    FirestoreResolver.prototype.getFoodEntriesByDate = function (input) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2, this.firestoreService.getFoodEntriesByDate(input.userId, input.date)];
+            });
         });
-    });
-}
-bootstrap();
-//# sourceMappingURL=main.js.map
+    };
+    __decorate([
+        (0, graphql_1.Query)(function () { return firebase_types_1.FoodEntries; }),
+        __param(0, (0, graphql_1.Args)("input")),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [firebase_dto_1.GetFoodEntriesByDateDTO]),
+        __metadata("design:returntype", Promise)
+    ], FirestoreResolver.prototype, "getFoodEntriesByDate", null);
+    FirestoreResolver = __decorate([
+        (0, graphql_1.Resolver)(),
+        __metadata("design:paramtypes", [firestore_service_1.FirestoreService])
+    ], FirestoreResolver);
+    return FirestoreResolver;
+}());
+exports.FirestoreResolver = FirestoreResolver;
+//# sourceMappingURL=firebase.resolver.js.map

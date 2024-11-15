@@ -1,4 +1,10 @@
 "use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -36,24 +42,42 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@nestjs/core");
-var app_module_1 = require("./app.module");
-function bootstrap() {
-    return __awaiter(this, void 0, void 0, function () {
-        var app;
-        var _a;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0: return [4, core_1.NestFactory.create(app_module_1.AppModule)];
-                case 1:
-                    app = _b.sent();
-                    return [4, app.listen((_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000)];
-                case 2:
-                    _b.sent();
-                    return [2];
-            }
+exports.AppRepository = void 0;
+var common_1 = require("@nestjs/common");
+var axios_1 = require("axios");
+var AppRepository = (function () {
+    function AppRepository() {
+        this.API_URL = 'https://api.nal.usda.gov/fdc/v1/foods/search';
+        this.API_KEY = 'DEMO_KEY';
+    }
+    AppRepository.prototype.searchFoods = function (query_1) {
+        return __awaiter(this, arguments, void 0, function (query, pageSize) {
+            var url, response, error_1;
+            if (pageSize === void 0) { pageSize = 10; }
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        url = "".concat(this.API_URL, "?query=").concat(query, "&pageSize=").concat(pageSize, "&api_key=").concat(this.API_KEY);
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4, axios_1.default.get(url)];
+                    case 2:
+                        response = _a.sent();
+                        console.log(response.data);
+                        return [2, response.data];
+                    case 3:
+                        error_1 = _a.sent();
+                        throw new Error("Error fetching data from USDA API: ".concat(error_1.message));
+                    case 4: return [2];
+                }
+            });
         });
-    });
-}
-bootstrap();
-//# sourceMappingURL=main.js.map
+    };
+    AppRepository = __decorate([
+        (0, common_1.Injectable)()
+    ], AppRepository);
+    return AppRepository;
+}());
+exports.AppRepository = AppRepository;
+//# sourceMappingURL=app.repository.js.map
