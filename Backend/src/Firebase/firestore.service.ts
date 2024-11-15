@@ -30,7 +30,7 @@ export class FirestoreService {
       macros: { carbs: 0, protein: 0, fat: 0 },
       foods: [],
     });
-    return "User initalized";
+    return "User initialized";
   }
 
   async addFoodEntry(
