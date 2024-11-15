@@ -1,5 +1,13 @@
-import { IsString, Matches, IsNotEmpty, IsDefined } from "class-validator";
-import { InputType, Field } from "@nestjs/graphql";
+import {
+  IsString,
+  Matches,
+  IsDefined,
+  ValidateNested,
+  IsNumber,
+  IsDateString,
+} from "class-validator";
+import { Field, InputType } from "@nestjs/graphql";
+import { Type } from "class-transformer";
 
 export class FoodEntriesDTO {
   calories: number;
@@ -23,4 +31,47 @@ export class GetFoodEntriesByDateDTO {
   @Matches(/^\d{8}$/, { message: "Date must be in yyyymmdd format." })
   @IsDefined()
   date: string;
+}
+
+@InputType()
+class MacrosDto {
+  @Field()
+  @IsNumber()
+  carbs: number;
+
+  @Field()
+  @IsNumber()
+  fats: number;
+
+  @Field()
+  @IsNumber()
+  protein: number;
+}
+
+@InputType()
+export class FoodEntryDto {
+  @Field()
+  @IsString()
+  @IsDefined()
+  foodName: string;
+
+  @Field()
+  @ValidateNested()
+  @Type(() => MacrosDto)
+  macros: MacrosDto;
+
+  @Field()
+  @IsDateString()
+  @IsDefined()
+  date: string;
+
+  @Field()
+  @IsString()
+  @IsDefined()
+  userId: string;
+
+  @Field()
+  @IsNumber()
+  @IsDefined()
+  calories: number;
 }

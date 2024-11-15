@@ -1,7 +1,7 @@
-import { Resolver, Query, Args } from "@nestjs/graphql";
+import { Resolver, Query, Args, Mutation } from "@nestjs/graphql";
 import { FirestoreService } from "./firestore.service";
 import { FoodEntries } from "./Types/firebase.types";
-import { GetFoodEntriesByDateDTO } from "./Types/firebase.dto";
+import { GetFoodEntriesByDateDTO, FoodEntryDto } from "./Types/firebase.dto";
 
 @Resolver()
 export class FirestoreResolver {
@@ -13,4 +13,23 @@ export class FirestoreResolver {
   ): Promise<FoodEntries> {
     return this.firestoreService.getFoodEntriesByDate(input.userId, input.date);
   }
+
+  @Mutation(() => String)
+  async addFoodEntry(@Args("input") input: FoodEntryDto): Promise<String> {
+    return this.firestoreService.addFoodEntry(
+      input.userId,
+      input.date,
+      input.foodName,
+      input.macros,
+      input.calories
+    );
+  }
+
+  @Mutation(() => String)
+  async initializeUser(@Args("userId") userId: string): Promise<String> {
+    return this.firestoreService.initializeUser(userId);
+  }
+
+  @Mutation(() => String)
+  async deleteFoodEntry() {}
 }
