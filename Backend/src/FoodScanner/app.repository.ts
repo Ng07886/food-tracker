@@ -23,9 +23,10 @@ export class AppRepository {
     try {
       const response = await axios.get(url);
       const foodObj = response.data.foods[0]
-      const macros = this.extractMacros(foodObj.foodNutrients);
-      const food = {
+      const macros = this.extractMacros(foodObj.foodNutrients, foodObj.servingSize);
+      const food: FoodDetails = {
             id: foodObj.fdcId,
+            servingSize: foodObj.servingSize,
             description: foodObj.description,
             nutritionData: macros
       };
@@ -37,7 +38,7 @@ export class AppRepository {
     }
   }
 
-  private extractMacros( foodNutrients: [any]): any {
+  private extractMacros( foodNutrients: [any], servingSize: number): any {
 
     const retObj = {}
 
@@ -47,7 +48,7 @@ export class AppRepository {
         retObj[mappings[nutrient.nutrientId]] = {
           nutrientId: nutrient.nutrientId,
           name: nutrient.nutrientName,
-          amount: nutrient.nutrientNumber,
+          amount: Math.round((Number(nutrient.value)*servingSize)/100),
           unitName: nutrient.unitName
         }
     })
