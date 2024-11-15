@@ -33,7 +33,7 @@ export class NutritionData {
 
 
 @ObjectType()
-export class Food {
+export class FoodDetails {
   @Field()
   id: string;
 

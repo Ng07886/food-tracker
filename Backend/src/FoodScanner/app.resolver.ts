@@ -1,16 +1,16 @@
 import { Resolver, Query, Args } from "@nestjs/graphql";
 import { AppService } from "./app.service";
-import { FirestoreService } from "../Firebase/firestore.service";
+import { FoodDetails } from "./FoodDTO";
 
 @Resolver()
 export class AppResolver {
   constructor(
-    private readonly appService: AppService,
-    private readonly firestoreService: FirestoreService
+    private readonly appService: AppService
   ) {}
 
-  @Query(() => String)
-  async searchFoods(@Args("userId") userId: string) {
-    return this.appService.getFoods(userId);
+  @Query(() => FoodDetails)
+  async searchFoods(@Args('query') query: string): Promise<FoodDetails> {
+    return this.appService.searchFoods(query);
   }
+
 }
