@@ -1,4 +1,5 @@
 import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
+import { ConfigModule } from '@nestjs/config';
 import { Module } from "@nestjs/common";
 import { GraphQLModule } from "@nestjs/graphql";
 import { AppRepository } from "./FoodScanner/app.repository";
@@ -13,6 +14,10 @@ import { FirestoreResolver } from "./Firebase/firebase.resolver";
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true, // Makes the ConfigModule globally available
+      envFilePath: '.env', // Specify the path to your .env file
     }),
   ],
   providers: [
