@@ -3,9 +3,9 @@ import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import { useQuery, gql } from "@apollo/client";
 
 const ITEM_QUERY = gql`
-query($query: String!)
+query($gtinCode: String!)
 {
-  searchFoods(query: $query)
+  searchFoods(gtinCode: $gtinCode)
   {
       id
     description
@@ -37,15 +37,15 @@ interface ParentProps {
 
 
 function BarcodeScanner({scanBarcode, setScanBarcode}: ParentProps) {
-  const [query, setQuery] = useState<string | null>(null);
+  const [gtinCode, setCode] = useState<string | null>(null);
   const { data, loading, error } = useQuery(ITEM_QUERY, {
-    variables: { query },
-    skip: !query, // Skip the query if the barcode is null
+    variables: { gtinCode },
+    skip: !gtinCode, // Skip the query if the barcode is null
   });
 
   const handleScan = (scannedBarcode: string) => {
     console.log(scannedBarcode);
-    setQuery(scannedBarcode);
+    setCode(scannedBarcode);
   };
 
   console.log(data);

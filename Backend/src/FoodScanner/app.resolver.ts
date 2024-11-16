@@ -9,8 +9,8 @@ export class AppResolver {
   ) {}
 
   @Query(() => FoodDetails)
-  async searchFoods(@Args('query') query: string): Promise<FoodDetails> {
-    return this.appService.searchFoods(query);
+  async searchFoods(@Args('gtinCode') gtinCode: string): Promise<FoodDetails> {
+    return this.appService.searchFoods(gtinCode);
   }
 
 }

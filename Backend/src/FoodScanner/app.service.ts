@@ -6,7 +6,7 @@ import { FoodDetails } from "./FoodDTO";
 export class AppService {
   constructor(private readonly appRepository: AppRepository) {}
 
-  async searchFoods(query: string): Promise<FoodDetails> {
-    return this.appRepository.searchFoods(query);
+  async searchFoods(gtinCode: string): Promise<FoodDetails> {
+    return this.appRepository.searchFoods(gtinCode);
   }
 }

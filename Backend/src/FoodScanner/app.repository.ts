@@ -18,8 +18,8 @@ export class AppRepository {
   private readonly API_URL = 'https://api.nal.usda.gov/fdc/v1/foods/search';
   private readonly API_KEY = process.env.API_KEY;
 
-  async searchFoods(query: string, pageSize = 10): Promise<FoodDetails> {
-    const url = `${this.API_URL}?query=${query}&pageSize=${pageSize}&api_key=${this.API_KEY}`;
+  async searchFoods(gtinCode: string, pageSize = 10): Promise<FoodDetails> {
+    const url = `${this.API_URL}?query=${gtinCode}&pageSize=${pageSize}&api_key=${this.API_KEY}`;
     try {
       const response = await axios.get(url);
       const foodObj = response.data.foods[0]
