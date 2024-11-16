@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from "@nestjs/graphql";
 
 @ObjectType()
-class Macros {
+export class Macros {
   @Field(() => Int)
   carbs: number;
 
