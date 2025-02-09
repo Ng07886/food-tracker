@@ -1,5 +1,28 @@
+.title-box {
+  display: flex;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  text-align: center;
+}
+
 .calorie-box {
-  border: solid 2px black;
+  border: solid 1px #3f4f44;
   padding: 10px;
   text-align: center;
+  border-radius: 40px;
+  margin: 10px 40px;
+  width: fit-content;
+}
+
+.chart-container {
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+}
+
+.quote {
+  margin: 20px 0;
+  font-style: italic;
+  color: #3f4f44;
+  position: relative;
 }

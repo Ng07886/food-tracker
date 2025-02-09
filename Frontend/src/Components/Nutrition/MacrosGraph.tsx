@@ -11,7 +11,7 @@ export const MacrosGraph = () => {
     datasets: [
       {
         data: [180, 60, 450],
-        backgroundColor: ["#4C212A", "#798071", "#B1FCF9"],
+        backgroundColor: ["#9BC0A6", "#A27B5C", "#2C3930"],
         borderWidth: 1,
       },
     ],
@@ -19,7 +19,7 @@ export const MacrosGraph = () => {
 
   return (
     <div className="chart-container">
-      <h2 style={{ textAlign: "center" }}>Macros Chart</h2>
+      <h2>Macros Chart</h2>
       <Pie
         data={chartData}
         options={{
