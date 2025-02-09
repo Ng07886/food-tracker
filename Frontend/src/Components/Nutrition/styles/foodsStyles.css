@@ -1,0 +1,11 @@
+.food-item {
+  display: flex;
+  border: 1px solid #dcd7c9;
+  justify-content: space-between;
+  margin: 10px 20px;
+  padding: 5px;
+}
+
+.foods-title {
+  margin-top: 10px;
+}

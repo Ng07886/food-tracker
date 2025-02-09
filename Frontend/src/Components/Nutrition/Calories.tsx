@@ -4,8 +4,15 @@ import "./styles/styles.css";
 
 export const Calories = () => {
   return (
-    <Box className="calorie-box">
-      <Typography variant="h2">Calories: 300 / 2,500</Typography>
+    <Box className="title-box">
+      <Box className="quote">
+        <Typography variant="h6">
+          "The pain you feel today will be the strength you feel tomorrow."{" "}
+        </Typography>
+      </Box>
+      <Box className="calorie-box">
+        <Typography variant="h5">Calories: 300</Typography>
+      </Box>
     </Box>
   );
 };

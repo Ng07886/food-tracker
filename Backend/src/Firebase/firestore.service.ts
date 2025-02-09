@@ -27,7 +27,7 @@ export class FirestoreService {
 
     await dateDocRef.set({
       calories: 0,
-      macros: { carbs: 0, protein: 0, fat: 0 },
+      macros: { carbs: 0, protein: 0, fats: 0 },
       foods: [],
     });
     return "User initialized";
@@ -52,7 +52,7 @@ export class FirestoreService {
         macros: {
           carbs: macros.carbs,
           protein: macros.protein,
-          fat: macros.fats,
+          fats: macros.fats,
         },
         foods: [{ name: foodName, calories: calories, macros: macros }],
       });
@@ -63,7 +63,7 @@ export class FirestoreService {
       const updatedMacros = {
         carbs: existingData.macros.carbs + macros.carbs,
         protein: existingData.macros.protein + macros.protein,
-        fat: existingData.macros.fat + macros.fats,
+        fats: existingData.macros.fats + macros.fats,
       };
 
       const updatedFoods = [
@@ -78,7 +78,7 @@ export class FirestoreService {
       });
     }
 
-    return "Food entry added successfully.";
+    return `${foodName} added successfully.`;
   }
 
   async getFoodEntriesByDate(
@@ -97,7 +97,8 @@ export class FirestoreService {
     if (dateDoc.exists) {
       return dateDoc.data() as FoodEntriesDTO; // Returns the food entry data for the specified date
     } else {
-      throw new Error("User not found");
+      this.initializeUser(userId);
+      throw new Error("User not found so user was initialized");
     }
   }
 }
