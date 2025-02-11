@@ -9,6 +9,9 @@ import {
 import { useAuth } from "../../context/authContext/index";
 import "./Styles/styles.css";
 import "../Home";
+import { userIdVar } from "../../ApolloClient/ApolloState";
+import { useMutation } from "@apollo/client";
+import { INITIALIZE_USER } from "../../ApolloClient/mutations";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,6 +21,9 @@ export default function Login() {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [buttonType, setButtonType] = useState("login");
+  const [initializeUser, { data, loading, error }] = useMutation(
+    INITIALIZE_USER
+  );
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -26,17 +32,31 @@ export default function Login() {
     checkPassword();
     if (!usernameError || !passwordError) {
       try {
-        // const res =
-        //   buttonType === "login"
-        //     ? await doSignInWithEmailAndPassword(username, password)
-        //     : await doCreateUserWithEmailAndPassword(username, password);
-        // console.log(res);
-        // setLoginError(false);
+        const res =
+          buttonType === "login"
+            ? await doSignInWithEmailAndPassword(username, password)
+            : await doCreateUserWithEmailAndPassword(username, password);
+        console.log("this is the res", res.user.uid);
+        userIdVar(res.user.uid);
+        setLoginError(false);
+        handleInitialize();
         return navigate("/Home");
       } catch (error) {
         console.log(error);
         setLoginError(true);
       }
+    }
+  };
+
+  const handleInitialize = async () => {
+    try {
+      console.log(userIdVar());
+      const response = await initializeUser({
+        variables: { userId: userIdVar() },
+      });
+      console.log("User initialized:", response.data.initializeUser);
+    } catch (err) {
+      console.error("Error initializing user:", err);
     }
   };
 
