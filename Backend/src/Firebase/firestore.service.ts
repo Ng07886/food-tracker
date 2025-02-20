@@ -1,7 +1,7 @@
 // firestore.service.ts
 import { Injectable } from "@nestjs/common";
 import { FirebaseProvider } from "./firebase.provider";
-import { FoodEntriesDTO } from "./Types/firebase.dto";
+import { FoodEntriesDTO, FoodEntryDto } from "./Types/firebase.dto";
 
 type Macros = {
   carbs: number;
@@ -30,45 +30,50 @@ export class FirestoreService {
       macros: { carbs: 0, protein: 0, fats: 0 },
       foods: [],
     });
+    console.log("User initialized");
     return "User initialized";
   }
 
-  async addFoodEntry(
-    userId: string,
-    date: string,
-    foodName: string,
-    macros: Macros,
-    calories: number
-  ): Promise<string> {
+  async addFoodEntry(input: FoodEntryDto): Promise<string> {
     const firestore = this.firebaseProvider.getFirestore();
 
-    const userDocRef = firestore.collection("Users").doc(userId);
-    const dateDocRef = userDocRef.collection("DateId").doc(date);
+    const userDocRef = firestore.collection("Users").doc(input.userId);
+    const dateDocRef = userDocRef.collection("DateId").doc(input.date);
 
     const dateDoc = await dateDocRef.get();
     if (!dateDoc.exists) {
       await dateDocRef.set({
-        calories: calories,
+        calories: input.calories,
         macros: {
-          carbs: macros.carbs,
-          protein: macros.protein,
-          fats: macros.fats,
+          carbs: input.macros.carbs,
+          protein: input.macros.protein,
+          fats: input.macros.fats,
         },
-        foods: [{ name: foodName, calories: calories, macros: macros }],
+        foods: [
+          {
+            name: input.foodName,
+            calories: input.calories,
+            macros: input.macros,
+          },
+        ],
       });
     } else {
       const existingData = dateDoc.data();
 
-      const updatedCalories = existingData.calories + calories;
+      const updatedCalories = existingData.calories + input.calories;
       const updatedMacros = {
-        carbs: existingData.macros.carbs + macros.carbs,
-        protein: existingData.macros.protein + macros.protein,
-        fats: existingData.macros.fats + macros.fats,
+        carbs: existingData.macros.carbs + input.macros.carbs,
+        protein: existingData.macros.protein + input.macros.protein,
+        fats: existingData.macros.fats + input.macros.fats,
       };
 
       const updatedFoods = [
         ...existingData.foods,
-        { name: foodName, calories: calories, macros: macros },
+        {
+          name: input.foodName,
+          calories: input.calories,
+          macros: input.macros,
+        },
       ];
 
       await dateDocRef.update({
@@ -78,7 +83,7 @@ export class FirestoreService {
       });
     }
 
-    return `${foodName} added successfully.`;
+    return `${input.foodName} added successfully.`;
   }
 
   async getFoodEntriesByDate(
@@ -86,19 +91,28 @@ export class FirestoreService {
     date: string
   ): Promise<FoodEntriesDTO> {
     const firestore = this.firebaseProvider.getFirestore();
-    const dateDocRef = firestore
-      .collection("Users")
-      .doc(userId)
-      .collection("DateId")
-      .doc(date);
+    const userDocRef = firestore.collection("Users").doc(userId);
+    const dateDocRef = userDocRef.collection("DateId").doc(date);
 
     const dateDoc = await dateDocRef.get();
 
     if (dateDoc.exists) {
       return dateDoc.data() as FoodEntriesDTO; // Returns the food entry data for the specified date
     } else {
-      this.initializeUser(userId);
-      throw new Error("User not found so user was initialized");
+      const dateDocRef = userDocRef.collection("DateId").doc(date);
+
+      await dateDocRef.set({
+        calories: 0,
+        macros: { carbs: 0, protein: 0, fats: 0 },
+        foods: [],
+      });
+      const initialData = await dateDocRef.get();
+      console.log(
+        "Date not found date initialized",
+        initialData.data() as FoodEntriesDTO
+      );
+
+      return initialData.data() as FoodEntriesDTO;
     }
   }
 }

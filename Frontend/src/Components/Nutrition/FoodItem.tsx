@@ -1,14 +1,15 @@
 import { Box, Typography } from "@mui/material";
 import "./styles/foodsStyles.css";
 import React from "react";
+import { FoodEntry } from "../../ApolloClient/types";
 
-export const FoodItem = () => {
+export const FoodItem = (props: { food: FoodEntry }) => {
   return (
     <Box className="food-item">
-      <Typography>Pizza</Typography>
-      <Typography>P: 20g</Typography>
-      <Typography>F: 100g</Typography>
-      <Typography>C: 60g</Typography>
+      <Typography>{props.food.name}</Typography>
+      <Typography>P: {props.food.macros.protein}</Typography>
+      <Typography>F: {props.food.macros.fats}</Typography>
+      <Typography>C: {props.food.macros.protein}</Typography>
     </Box>
   );
 };

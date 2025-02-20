@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useReactiveVar } from "@apollo/client";
 import "./styles/styles.css";
-import { userIdVar } from "../../ApolloClient/ApolloState";
+import { userCaloriesVar } from "../../ApolloClient/ApolloState";
 
 export const Calories = () => {
   return (
@@ -14,7 +14,7 @@ export const Calories = () => {
       </Box>
       <Box className="calorie-box">
         <Typography variant="h5">
-          Welcome: {useReactiveVar(userIdVar)} Calories: 300
+          Calories: {useReactiveVar(userCaloriesVar) || 0}
         </Typography>
       </Box>
     </Box>
