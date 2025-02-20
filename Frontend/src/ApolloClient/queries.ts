@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const ITEM_QUERY = gql`
-  query($gtinCode: String!) {
+  query ($gtinCode: String!) {
     searchFoods(gtinCode: $gtinCode) {
       id
       description
@@ -21,6 +21,28 @@ export const ITEM_QUERY = gql`
         calories {
           amount
           unitName
+        }
+      }
+    }
+  }
+`;
+
+export const GET_FOOD_ENTRIES_BY_DATE = gql`
+  query GetFoodEntriesByDate($userId: String!, $date: String!) {
+    getFoodEntriesByDate(input: { userId: $userId, date: $date }) {
+      calories
+      macros {
+        carbs
+        protein
+        fats
+      }
+      foods {
+        name
+        calories
+        macros {
+          carbs
+          protein
+          fats
         }
       }
     }

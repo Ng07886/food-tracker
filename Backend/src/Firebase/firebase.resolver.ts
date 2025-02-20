@@ -16,13 +16,7 @@ export class FirestoreResolver {
 
   @Mutation(() => String)
   async addFoodEntry(@Args("input") input: FoodEntryDto): Promise<String> {
-    return this.firestoreService.addFoodEntry(
-      input.userId,
-      input.date,
-      input.foodName,
-      input.macros,
-      input.calories
-    );
+    return this.firestoreService.addFoodEntry(input);
   }
 
   @Mutation(() => String)
