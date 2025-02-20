@@ -7,15 +7,7 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDOTRl4uoZDDlm8vBJqlNDf94scjC-m_Rg",
-  authDomain: "foodtracker-5a7d4.firebaseapp.com",
-  projectId: "foodtracker-5a7d4",
-  storageBucket: "foodtracker-5a7d4.appspot.com",
-  messagingSenderId: "815371791614",
-  appId: "1:815371791614:web:4a7294ebf5fc94924fc9af",
-  measurementId: "G-PYSEQVCXHB",
-};
+const firebaseConfig = {};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
