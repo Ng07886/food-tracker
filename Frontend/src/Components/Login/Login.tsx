@@ -3,10 +3,8 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
   doSignInWithEmailAndPassword,
-  doSignInWithGoogle,
   doCreateUserWithEmailAndPassword,
 } from "../../Firebase/Auth";
-import { useAuth } from "../../context/authContext/index";
 import "./Styles/styles.css";
 import "../Home";
 import { userIdVar } from "../../ApolloClient/ApolloState";
@@ -21,7 +19,7 @@ export default function Login() {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [buttonType, setButtonType] = useState("login");
-  const [initializeUser, { data, loading, error }] = useMutation(
+  const [initializeUser] = useMutation(
     INITIALIZE_USER
   );
 

@@ -2,11 +2,8 @@ import { auth } from "./Firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  sendEmailVerification,
-  updatePassword,
-  signInWithPopup,
-  GoogleAuthProvider,
+  //signInWithPopup,
+  //GoogleAuthProvider,
 } from "firebase/auth";
 
 export const doCreateUserWithEmailAndPassword = async (
@@ -22,15 +19,15 @@ export const doSignInWithEmailAndPassword = (
 ) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
-
+/*
 export const doSignInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const result = await signInWithPopup(auth, provider);
-  const user = result.user;
+  //const user = result.user;
 
   // add user to firestore
 };
-
+*/
 export const doSignOut = () => {
   return auth.signOut();
 };

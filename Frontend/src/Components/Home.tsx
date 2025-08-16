@@ -27,7 +27,7 @@ export default function Home() {
     selectedDateVar(dayjs().format("YYYYMMDD"));
   }, []);
 
-  const { data, loading, error } = useQuery(GET_FOOD_ENTRIES_BY_DATE, {
+  const { data } = useQuery(GET_FOOD_ENTRIES_BY_DATE, {
     variables: {
       userId: useReactiveVar(userIdVar),
       date: selectedDate,
