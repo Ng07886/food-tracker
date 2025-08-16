@@ -8,6 +8,9 @@ import { AppService } from "./FoodScanner/app.service";
 import { FirebaseProvider } from "./Firebase/firebase.provider";
 import { FirestoreService } from "./Firebase/firestore.service";
 import { FirestoreResolver } from "./Firebase/firebase.resolver";
+import { AuthService } from "./Auth/auth.service";
+import { AuthResolver } from "./Auth/auth.resolver";
+import { AuthProvider } from "./Auth/auth.provider";
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { FirestoreResolver } from "./Firebase/firebase.resolver";
     AppService,
     AppResolver,
     AppRepository,
+    AuthService,
+    AuthResolver,
+    AuthProvider,
     FirebaseProvider,
     FirestoreService,
     FirestoreResolver,

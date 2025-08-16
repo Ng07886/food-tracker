@@ -15,11 +15,11 @@ const mappings = {
 
 @Injectable()
 export class AppRepository {
-  private readonly API_URL = 'https://api.nal.usda.gov/fdc/v1/foods/search';
+  private readonly USDA_API_URL = process.env.USDA_API_URL;
   private readonly API_KEY = process.env.API_KEY;
 
   async searchFoods(gtinCode: string, pageSize = 10): Promise<FoodDetails> {
-    const url = `${this.API_URL}?query=${gtinCode}&pageSize=${pageSize}&api_key=${this.API_KEY}`;
+    const url = `${this.USDA_API_URL}/foods/search?query=${gtinCode}&pageSize=${pageSize}&api_key=${this.API_KEY}`;
     try {
       const response = await axios.get(url);
       const foodObj = response.data.foods[0]
@@ -30,11 +30,14 @@ export class AppRepository {
             description: foodObj.description,
             nutritionData: macros
       };
+      
+      console.log(`Retrieved food data for UPC ${gtinCode}`)
 
       return food;
 
     } catch (error) {
-      throw new Error(`Error fetching data from USDA API: ${error.message}`);
+      console.log(`Error fetching data from USDA API for ${gtinCode}`)
+      throw new Error(`Failed fetching data from USDA API`);
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import { useQuery } from "@apollo/client";
 import { ITEM_QUERY } from "../../ApolloClient/queries";
@@ -16,46 +16,44 @@ function BarcodeScanner({ scanBarcode, setScanBarcode }: ParentProps) {
   });
 
   const handleScan = (scannedBarcode: string) => {
-    console.log(scannedBarcode);
     setCode(scannedBarcode);
+    setScanBarcode(false)
   };
 
-  console.log(data);
+  useCallback(handleScan, [scanBarcode])
 
   return (
     <>
-      {scanBarcode && (
-        <BarcodeScannerComponent
-          width={500}
-          height={500}
-          onUpdate={(err, result: any) => {
-            if (result) handleScan(result.text);
-          }}
-        />
-      )}
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {data && data.searchFoods && (
-        <div>
-          <p>{data.searchFoods.description}</p>
-          <p>
-            Calories: {data.searchFoods.nutritionData.calories.amount}{" "}
-            {data.searchFoods.nutritionData.calories.unitName}
-          </p>
-          <p>
-            Protein: {data.searchFoods.nutritionData.protein.amount}{" "}
-            {data.searchFoods.nutritionData.protein.unitName}
-          </p>
-          <p>
-            Carbs: {data.searchFoods.nutritionData.carbs.amount}{" "}
-            {data.searchFoods.nutritionData.carbs.unitName}
-          </p>
-          <p>
-            Fats: {data.searchFoods.nutritionData.fats.amount}{" "}
-            {data.searchFoods.nutritionData.fats.unitName}
-          </p>
-        </div>
-      )}
+      <div>
+        {scanBarcode && (
+          <BarcodeScannerComponent
+            width={300}
+            height={300}
+            onUpdate={(err, result: any) => {
+              if (result) handleScan(result.text);
+            }}
+          />
+        )}
+      </div>
+      {
+        !scanBarcode && (
+          <div>
+            {loading && <p>Loading...</p>}
+            {error && <p>Error: {error.message}</p>}
+            {data && data.searchFoods && (
+              <div>
+                <p>{data.searchFoods.description}<br/>
+                  {`${data.searchFoods.nutritionData.calories.amount} Calories`}<br/>
+                  {`Protein: ${data.searchFoods.nutritionData.protein.amount}${(data.searchFoods.nutritionData.protein.unitName).toLowerCase()}`}<br/>
+                  {`Carbs: ${data.searchFoods.nutritionData.carbs.amount}${(data.searchFoods.nutritionData.carbs.unitName).toLowerCase()}`}<br/>
+                  {`Fats: ${data.searchFoods.nutritionData.fats.amount}${(data.searchFoods.nutritionData.fats.unitName).toLowerCase()}`}<br/>
+                </p>
+              </div>
+            )}
+          </div>
+        )
+      }
+
     </>
   );
 }
