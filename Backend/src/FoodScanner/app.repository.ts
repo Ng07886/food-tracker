@@ -15,7 +15,7 @@ const mappings = {
 
 @Injectable()
 export class AppRepository {
-  private readonly API_URL = 'https://api.nal.usda.gov/fdc/v1/foods/search';
+  private readonly API_URL = process.env.API_URL;
   private readonly API_KEY = process.env.API_KEY;
 
   async searchFoods(gtinCode: string, pageSize = 10): Promise<FoodDetails> {
@@ -34,7 +34,8 @@ export class AppRepository {
       return food;
 
     } catch (error) {
-      throw new Error(`Error fetching data from USDA API: ${error.message}`);
+      console.log(`Error fetching data from USDA API for ${gtinCode}: ${error}`)
+      throw new Error(`Failed fetching data from USDA API`);
     }
   }
 

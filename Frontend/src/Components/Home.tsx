@@ -70,12 +70,10 @@ export default function Home() {
             >
               Scan Barcode
             </Button>
-            {scanBarcode && (
               <BarcodeScanner
                 scanBarcode={scanBarcode}
                 setScanBarcode={setScanBarcode}
               />
-            )}
           </Box>
         </Box>
       </Box>
