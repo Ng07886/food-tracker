@@ -1,5 +1,5 @@
 // src/apolloClient.ts
-import { ApolloClient, HttpLink } from "@apollo/client";
+import { ApolloClient} from "@apollo/client";
 import { cache } from "./ApolloState";
 
 const client = new ApolloClient({

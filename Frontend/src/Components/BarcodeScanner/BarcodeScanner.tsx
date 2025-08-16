@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import { useQuery } from "@apollo/client";
 import { ITEM_QUERY } from "../../ApolloClient/queries";
@@ -20,7 +20,7 @@ function BarcodeScanner({ scanBarcode, setScanBarcode }: ParentProps) {
     setScanBarcode(false)
   };
 
-  useCallback(handleScan, [scanBarcode])
+  useCallback(handleScan, [setScanBarcode])
 
   return (
     <>

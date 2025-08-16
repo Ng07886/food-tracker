@@ -36,7 +36,7 @@ export class AppRepository {
       return food;
 
     } catch (error) {
-      console.log(`Error fetching data from USDA API for ${gtinCode}`)
+      console.error(`Error fetching data from USDA API for ${gtinCode}`)
       throw new Error(`Failed fetching data from USDA API`);
     }
   }
